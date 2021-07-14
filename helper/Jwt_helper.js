@@ -11,7 +11,7 @@ module.exports = {
 
                 const options = {
                     issuer:"nizamkolathoden.live",
-                    expiresIn:"1h"
+                    expiresIn:"30s"
                 }
 
                 const secret = process.env.Acess_Token_Secret
@@ -24,5 +24,36 @@ module.exports = {
                    resolve(token)
                 })
             })
+    },
+
+    verifyAcessToken:(req,res,next)=>{
+        
+        const secret = process.env.Acess_Token_Secret 
+
+        const authHeader = req.headers['authorization'];
+
+        if(!authHeader) 
+        return res.status(401).json({error:"Un Authrized User"});
+
+        const bearerToken = authHeader.split(' ');
+
+        const token = bearerToken[1];
+
+        jwt.verify(token,secret,(err,payload)=>{
+
+            if(err){
+                
+                const message = err.name === 'JsonWebTokenError'?'UnAuthrized User':err.message
+
+                return res.json({error:message})
+
+            }
+
+            req.payload = payload
+
+            next()
+        })
+        
     }
+
 }
