@@ -39,5 +39,21 @@ module.exports = {
     
     
     
+    },
+    login:async(req,res)=>{
+
+        const {email,password} = req.body;
+        
+        if(!email||!password) return res.json({error:"enter all the fields"});
+
+        const userFound = await User.findOne({email});
+
+        if(!userFound) return res.status(404).json({error:'wrong Username/Password'});
+
+        const isMatch = await bcrypt.compare(password,userFound.password);
+
+        if(!isMatch) return res.status(404).json({error:"wrong Username/Password"});
+
+        res.json("loged in")
     }
 }
