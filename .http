@@ -26,5 +26,14 @@ POST {{url}}/refresh
 Content-Type: application/json
 
 {
-    "refershToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2MGVlYTg1NzA3YmFmOTQwMjE4MzEyN2QiLCJpYXQiOjE2MjYyNTkyMzIsImV4cCI6MTYyODg1MTIzMiwiaXNzIjoibml6YW1rb2xhdGhvZGVuLmxpdmUifQ.vYiNCsIyBgrphVtWNNJNClciY5vEsolPbndFsk2eHc0"
+    "refershToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2MGVlYTg1NzA3YmFmOTQwMjE4MzEyN2QiLCJpYXQiOjE2MjYyNjE4NDMsImV4cCI6MTYyODg1Mzg0MywiaXNzIjoibml6YW1rb2xhdGhvZGVuLmxpdmUifQ.Z9AbDQPxHMOkZKrgd3EQAaiwfIqPqiCcy_6ZbSJ4ZxA"
+}
+
+###
+DELETE {{url}}/logout
+Content-Type: application/json
+
+{
+    "refershToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2MGVlYTg1NzA3YmFmOTQwMjE4MzEyN2QiLCJpYXQiOjE2MjYyNzYzOTIsImV4cCI6MTYyODg2ODM5MiwiaXNzIjoibml6YW1rb2xhdGhvZGVuLmxpdmUifQ.YWyTyqxqfJkSKUBhEfgDTJzJbMnOO0w3pnfYmY2VUIw"
+
 }

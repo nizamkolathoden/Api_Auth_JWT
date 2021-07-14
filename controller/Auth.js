@@ -7,6 +7,7 @@ const {
     signRefreshToken,
     verifyRefreshToken
 } = require('../helper/Jwt_helper')
+const client = require('../helper/redis_init')
 
 module.exports = {
     signup: async (req, res) => {
@@ -104,13 +105,39 @@ module.exports = {
 
             const refToken = await signRefreshToken(userId);
 
-            res.json({accessToken,refershToken:refToken})
+            res.json({ accessToken, refershToken: refToken })
 
 
         } catch (error) {
             console.log(error.message);
-            res.status(error.code).json({error:error.message})
+            res.status(error.code).json({ error: error.message })
         }
+
+    },
+    logout: async (req,res) => {
+        try {
+            const { refershToken } = req.body;
+
+            if (!refershToken) return res.status(503).json({ error: "Bad Request" });
+
+            const userId = await verifyRefreshToken(refershToken);
+
+            client.DEL(userId, (err, val) => {
+
+                if (err) {
+
+                    console.log(err.message)
+                    res.status(500).json({ error: "Internal Server Error" });
+                }
+                console.log(val);
+                res.sendStatus(204)
+            })
+        } catch (err) {
+            console.log(err.message);
+            res.json({error:err.message})
+        }
+
+
 
     }
 }

@@ -7,4 +7,6 @@ router.post("/login",Auth.login)
 
 router.post("/refresh",Auth.refershToken)
 
+router.delete("/logout",Auth.logout)
+
 module.exports = router;

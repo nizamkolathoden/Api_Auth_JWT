@@ -79,7 +79,14 @@ module.exports = {
                     console.log(err.message);
                     reject(err)
                 }
-
+                const key = userId.toString()
+                    client.SET(key,token,'EX',30*24*60*60,(err,reply)=>{
+                        
+                        if(err){
+                            console.log(err.message);
+                            return res.status(500).json({error:"Internal Server Error"})
+                        }
+                    })
                 resolve(token)
             })
         })
@@ -91,6 +98,20 @@ module.exports = {
         return new Promise((resolve,reject)=>{
 
             jwt.verify(refershToken,secret,(err,payload)=>{
+
+                const userId = payload.aud;
+                
+                client.GET(userId,(err,result)=>{
+                    
+                    if(err){
+                        console.log(err.message);
+                        return res.status(500).json({error:"Internal Server Error"})
+                    }
+                    if(result===refershToken) 
+                    return resolve(userId)
+
+                    reject({message:"Un Autherized User",code:401})
+                })
                 
                 if(err){
                     
@@ -98,7 +119,7 @@ module.exports = {
                     reject({message:'Un Authrized User',code:401});
 
                 }
-                resolve(payload.aud)
+                
 
             })
         })
