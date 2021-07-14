@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+const client = require('./redis_init')
+
 module.exports = {
 
     signAcessToken:(userId)=>{
