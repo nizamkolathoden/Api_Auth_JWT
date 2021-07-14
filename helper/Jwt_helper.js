@@ -54,6 +54,53 @@ module.exports = {
             next()
         })
         
+    },
+
+    signRefreshToken:(userId)=>{
+        
+        return new Promise((resolve,reject)=>{
+            
+            const payload = {
+                aud:userId
+            } 
+
+            const options = {
+                issuer:"nizamkolathoden.live",
+                expiresIn:"30d"
+            }
+
+            const secert = process.env.Refresh_Token_Secret
+
+            jwt.sign(payload,secert,options,(err,token)=>{
+                
+                if(err){
+                    console.log(err.message);
+                    reject(err)
+                }
+
+                resolve(token)
+            })
+        })
+    },
+    verifyRefreshToken:(refershToken)=>{
+
+        const secret = process.env.Refresh_Token_Secret
+
+        return new Promise((resolve,reject)=>{
+
+            jwt.verify(refershToken,secret,(err,payload)=>{
+                
+                if(err){
+                    
+                    console.log(err.message);
+                    reject({message:'Un Authrized User',code:401});
+
+                }
+                resolve(payload.aud)
+
+            })
+        })
+
     }
 
 }
