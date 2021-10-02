@@ -14,7 +14,7 @@ app.use(express.json())
 app.use("/",require('./routes/Auth'))
 
 app.get("/pro",verifyAcessToken,(req,res)=>{
-    res.json('protected')
+    res.json('protected');
     console.log(req.payload)
 })
 
