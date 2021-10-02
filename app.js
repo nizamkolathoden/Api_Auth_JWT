@@ -15,7 +15,7 @@ app.use("/",require('./routes/Auth'))
 
 app.get("/pro",verifyAcessToken,(req,res)=>{
     res.json('protected');
-    console.log(req.payload)
+    console.lo
 })
 
 app.listen(port,()=>console.log(`server running on port ${port}`));
